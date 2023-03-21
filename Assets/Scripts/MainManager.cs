@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text HighScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
@@ -36,6 +38,8 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+        // Sets high score to saved high score
+        HighScoreText.text = "High Score: " + GameManager.Instance.Name + " " + GameManager.Instance.HighScore;
     }
 
     private void Update()
@@ -70,7 +74,21 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (GameManager.Instance.HighScore < m_Points)
+        {
+            GameManager.Instance.HighScore = m_Points;
+            GameManager.Instance.Name = GameManager.Instance.CurrentName;
+            GameManager.Instance.SaveHighScore();
+        }
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    /// <summary>
+    /// Handle quit button click event in main scene
+    /// </summary>
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

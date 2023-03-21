@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     // Stored data
     public string Name;
     public int HighScore;
+    public string CurrentName;
 
     // Checks for other instances of game manager and creates one
     private void Awake()
@@ -39,9 +40,9 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Saves name of high score
+    /// Saves highscore and name
     /// </summary>
-    public void SaveName()
+    public void SaveHighScore()
     {
         SaveData data = new SaveData();
         data.Name = Name;
@@ -52,9 +53,9 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Saves highscore
+    /// Loads highscore and name
     /// </summary>
-    public void SaveHighScore()
+    public void LoadHighScore()
     {
         string path = Application.persistentDataPath + "/savefile.json";
 
